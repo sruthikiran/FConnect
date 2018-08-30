@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href={% static "fconn_app/css/dashboard.css" %}>
+
+    <style>
+        .jumbotron {
+            background-color: white;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+    </style>
+
+  </head>
+  <body>
+
+      <nav class="navbar">
+          <button class="drk-btn">Home</button>
+          <button onclick="location.href='/profile';" class="drk-btn">Profile</button>
+          <!-- <button onclick="location.href='resources.html';" class="drk-btn">Resources</button> -->
+          <!-- <button onclick="location.href='about.html';" class="drk-btn">Find your Mentor</button> -->
+          <button onclick="location.href='/resources';" class="drk-btn">Resources</button>
+          <button class="drk-btn">Find your Mentor</button>
+          <button onclick="location.href='/logout';" class="drk-btn">Logout</button>
+      </nav>
+
+
+      <h1 id="task-h1" class="display-1">Welcome to FConnect!</h1>
+
+      <div class="container">
+        <div class="checklists">
+            <div class="formSubmit">
+                <h2>Find schools</h2>
+                <form action="/addCollege" method="post">
+                    {% csrf_token %}
+                    <select class="selectOption" name="college" id="">
+                        {% for college in colleges %}
+                            <option value="{{college.id}}">{{college.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <input class="btn btn-primary" type="submit" value="Find">
+                </form>
+            </div>
+            <br>
+
+            <table class="table table-bordered">
+              <tr>
+                <th>College Name</th>
+                <th>Appliction Type</th>
+                <th> Deadline</th>
+              </tr>
+              {% for college in user_colleges %}
+              <tr>
+                  <td> <a href="/checklist/{{college.id}}">{{college.name}}</a>  </td>
+                  <td>{{college.application_type}}</td>
+                  <td>{{college.deadline}}</td>
+                </tr>
+              {% endfor %}
+            </table>
+
+            <br>
+            <div>
+                <div class="formSubmit">
+                    <h2>Tasks</h2>
+                    <form action="/updateChecklist" method="post">
+                        {% csrf_token %}
+                        {% for task in checklist %}
+                            {% if task.is_completed %}
+                            <input type="checkbox" name='{{task.id}}' checked><span style='text-decoration: line-through;'>{{task.college.name}} -- {{task.deadline}}:  {{task.title}} </span><br>
+                          {% else %}
+                          <input type="checkbox" name='{{task.id}}'><span>{{task.college.name}} -- {{task.deadline}}:  {{task.title}} </span><br>
+                          {% endif %}
+                      {% endfor %}
+                      <input class="btn btn-primary" type="submit" value="Save">
+                  </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

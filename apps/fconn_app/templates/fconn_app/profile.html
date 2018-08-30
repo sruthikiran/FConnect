@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {% load static %}
+    <!-- <link rel="stylesheet" href={% static "fconn_app/css/dashboard.css" %}> -->
+  </head>
+  <body>
+    <nav class="navbar">
+        <button onclick="location.href='/dashboard';" class="drk-btn">Home</button>
+        <button onclick="location.href='/profile';" class="drk-btn">Profile</button>
+        <!-- <button onclick="location.href='resources.html';" class="drk-btn">Resources</button> -->
+        <!-- <button onclick="location.href='about.html';" class="drk-btn">Find your Mentor</button> -->
+        <button  onclick="location.href='/resources';" class="drk-btn">Resources</button>
+        <button class="drk-btn">Find your Mentor</button>
+        <button onclick="location.href='/logout';" class="drk-btn">Logout</button>
+    </nav>
+    <div class="container" style="color:black">
+      {% load widget_tweaks %}
+        <div class="form">
+            <h1>Edit your profile</h1>
+            <form action='/userInfoVal' method='post'>
+                {% csrf_token %}
+                <label for="firstName">First Name:</label>
+                <input class="form-control" type="text" name='firstName' value="{{user.first_name}}">
+
+                <label for="lastName">Last Name:</label>
+                <input class="form-control"type="text" name='lastName' value="{{user.last_name}}">
+
+                <label for='birthday'>Birthday:</label>
+                <input class="form-control" type="date" placeholder="{{userProfile.birthday}}" name='birthday' >
+
+                <label for="address">Address:</label>
+                <input class="form-control" type="text" name='address' value="{{userProfile.address}}">
+
+                <input type="hidden" name="country" id="countryId" value="US"/>
+                <label for="city">City:</label>
+                <select name="city"  class="cities form-control order-alpha" id="cityId">
+                  {% if userProfile.city == null %}
+                    <option value="">Select City</option>
+                  {% else %}
+                    <option value="">{{userProfile.city}}</option>
+                  {% endif %}
+                </select>
+
+                <label for="state">State:</label>
+                <select name="state" class="states form-control order-alpha" id="stateId">
+                  {% if userProfile.state == null %}
+                    <option value="">Select State</option>
+                  {% else %}
+                    <option value="">{{userProfile.state}}></option>
+                  {% endif %}
+                </select>
+
+                <label for="schoolState">School State:</label>
+                <input class="form-control" type="text" name='schoolState' value="{{userProfile.schoolState}}">
+
+                <label for="major">Major:</label>
+                <input class="form-control" type="text" name='major' value="{{userProfile.major}}">
+
+                <label for="schoolName">School Name:</label>
+                <input class="form-control" type="text" name='schoolName' value="{{userProfile.schoolName}}">
+                <br>
+
+                <label for="gender">Gender:</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="option1" name="gender" value="male">
+                  <label class="form-check-label" for="option1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="option2" name="gender" value="female">
+                  <label class="form-check-label" for="option2">Female</label>
+                </div>
+
+                <!-- <input class="form-control" type="text" name='gender' value="{{user.gender}}"> -->
+                <button class="btn-primary blue-btn">Save</button>
+              </form>
+          </div>
+        </div>
+  </body>
+</html>

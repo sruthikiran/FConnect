@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {% load static %}
+    <!-- <link rel="stylesheet" href={% static "fconn_app/css/signin.css" %}> -->
+
+    <body>
+
+        <nav class="navbar">
+            <button onclick="location.href='/dashboard';" class="drk-btn">Home</button>
+            <button onclick="location.href='/profile';" class="drk-btn">Profile</button>
+            <!-- <button onclick="location.href='resources.html';" class="drk-btn">Resources</button> -->
+            <!-- <button onclick="location.href='about.html';" class="drk-btn">Find your Mentor</button> -->
+            <button onclick="location.href='/resources';" class="drk-btn">Resources</button>
+            <button class="drk-btn">Find your Mentor</button>
+            <button onclick="location.href='/logout';" class="drk-btn">Logout</button>
+        </nav>
+
+        <div class="container" >
+          <h2>Status checklist</h2>
+          <h4> {{college.name}}</h4>
+          <form id='login_form' style="color:text" action="/updatechecklist/{{college.id}}" method='post'>
+               {% csrf_token %}
+               <div class="form-group">
+                 <label for="application">Application</label>
+                 <select value={{checklist.application}} name="application"> <option value="Completed">Completed</option><option value="Not Completed">Not Completed</option> <option value="Not Applicable">Not Applicable</option> </select>
+               </div>
+               <div class="form-group">
+                 <label for="test_scores">Standardized Test Scores</label>
+                 <select value="{{checklist.test_scores}}" name="test_scores"> <option value="Completed">Completed</option><option value="Not Completed">Not Completed</option> <option value="Not Applicable">Not Applicable</option> </select>
+               </div>
+               <div class="form-group">
+                 <label for="school_transcript">Official High School Transcript</label>
+                 <select value="{{checklist.school_transcript}}" name="school_transcript"> <option value="Completed">Completed</option><option value="Not Completed">Not Completed</option> <option value="Not Applicable">Not Applicable</option> </select>
+               </div>
+               <div class="form-group">
+                  <label for="reports">Mid-Year and Final-Year Grade Reports </label>
+                  <select name="reports"> <option value="Completed">Completed</option><option value="Not Completed">Not Completed</option> <option value="Not Applicable">Not Applicable</option> </select></td></tr>
+               </div>
+               <div class="form-group">
+                  <label for="sec_school_reports">Secondary School Report and/or Counselor Recommendation</label>
+                  <select name="sec_school_reports"> <option value="Completed">Completed</option><option value="Not Completed">Not Completed</option> <option value="Not Applicable">Not Applicable</option> </select>
+               </div>
+               <div class="form-group">
+                  <label for="recommendation">Recommendation </label>
+                  <select name="recommendation"> <option value="Completed">Completed</option><option value="Not Completed">Not Completed</option> <option value="Not Applicable">Not Applicable</option> </select></td></tr>
+               </div>
+                <input class="btn-primary blue-btn" type="submit" value='Submit'>
+              </div>
+           </form>
+        </div>
+    </body>
